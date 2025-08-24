@@ -1,6 +1,10 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
+const loader = document.querySelector('.loader');
+
 let lightbox;
 
 export function createGallery(images) {
@@ -20,7 +24,6 @@ export function createGallery(images) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 
-  // ❗ Ініціалізація або оновлення SimpleLightbox
   if (lightbox) {
     lightbox.refresh();
   } else {
@@ -29,4 +32,24 @@ export function createGallery(images) {
       captionDelay: 250,
     });
   }
+}
+
+export function clearGallery() {
+  gallery.innerHTML = '';
+}
+
+export function showLoader() {
+  loader.classList.remove('hidden');
+}
+
+export function hideLoader() {
+  loader.classList.add('hidden');
+}
+
+export function showLoadMore() {
+  loadMoreBtn.classList.remove('hidden');
+}
+
+export function hideLoadMore() {
+  loadMoreBtn.classList.add('hidden');
 }
