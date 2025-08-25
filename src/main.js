@@ -16,6 +16,7 @@ const loadMoreBtn = document.querySelector('.load-more');
 
 let query = '';
 let page = 1;
+const perPage = 15;
 
 form.addEventListener('submit', async e => {
   e.preventDefault();
@@ -49,7 +50,7 @@ form.addEventListener('submit', async e => {
 
     createGallery(data.hits);
 
-    if (data.totalHits > page * 15) {
+    if (data.totalHits > page * perPage) {
       showLoadMore();
     }
   } catch (err) {
@@ -64,6 +65,7 @@ form.addEventListener('submit', async e => {
 });
 
 loadMoreBtn.addEventListener('click', async () => {
+  hideLoadMore(); // одразу ховаємо кнопку
   page += 1;
   showLoader();
 
@@ -72,8 +74,9 @@ loadMoreBtn.addEventListener('click', async () => {
 
     createGallery(data.hits);
 
-    if (page * 15 >= data.totalHits) {
-      hideLoadMore();
+    if (page * perPage < data.totalHits) {
+      showLoadMore(); // якщо ще є сторінки
+    } else {
       iziToast.info({
         title: 'End',
         message: "We're sorry, but you've reached the end of search results.",
